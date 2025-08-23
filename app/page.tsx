@@ -4,8 +4,9 @@ import CTA from '@/components/cta';
 import { getAllCompanions, getRecentSessions } from '@/lib/actions/companion.actions';
 import { getSubjectColor } from '@/lib/utils';
 
+export const dynamic = 'force-dynamic';
 
-const Page = async () =>  {
+const Page = async () => {
   const companions = await getAllCompanions({ limit: 3 });
   const recentSessionCompanions = await getRecentSessions(10);
 
@@ -15,7 +16,7 @@ const Page = async () =>  {
       <h1 className='text-2xl'>Popular Companions</h1>
       <section className="home-section">
         {companions.map((companion) => (
-          <CompanionCard key={companion.id}  color={getSubjectColor(companion.subject)} {...companion}/>
+          <CompanionCard key={companion.id} color={getSubjectColor(companion.subject)} {...companion} />
         ))}
       </section>
       <section className="home-section">
