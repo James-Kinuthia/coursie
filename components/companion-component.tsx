@@ -98,7 +98,7 @@ const CompanionComponent = ({ companionId, userName, name, userImage, subject, t
 
     return (
         <section className='flex flex-col h-[70vh]'>
-            <section className='flex gap-8 max-sm:flex-col'>
+            <section className='flex gap-8 flex-col md:flex-row'>
                 <div className="companion-section">
                     <div className="companion-avatar" style={{ backgroundColor: getSubjectColor(subject) }}>
                         <div className={cn('absolute transition-opacity duration-1000',
