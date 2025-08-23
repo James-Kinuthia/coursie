@@ -128,7 +128,7 @@ const CompanionComponent = ({ companionId, userName, name, userImage, subject, t
                 </div>
             </section>
             <section className='transcript'>
-                <div className="transcript-message no-scrollbar">
+                <div className="transcript-message mb-4 no-scrollbar">
                     {messages.map((message, index) => {
                         if (message.role === 'assistant') {
                             return (
