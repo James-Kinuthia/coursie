@@ -77,16 +77,30 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
     }
 
     const handleCall = async () => {
-        setCallStatus(CallStatus.CONNECTING)
+        try {
+            setCallStatus(CallStatus.CONNECTING);
+            
+            const config = configureAssistant(voice, style);
+            const assistantOverrides = {
+                variableValues: {
+                    subject,
+                    topic,
+                    style
+                },
+                clientMessages: ['transcript'],
+                serverMessages: []
+            };
 
-        const assistantOverrides = {
-            variableValues: { subject, topic, style },
-            clientMessages: ["transcript"],
-            serverMessages: [],
+            // Remove @ts-expect-error and handle the call properly
+            await vapi.start(config, assistantOverrides).catch((error) => {
+                console.error('VAPI start error:', error);
+                setCallStatus(CallStatus.INACTIVE);
+                throw error;
+            });
+        } catch (error) {
+            console.error('Call initialization failed:', error);
+            setCallStatus(CallStatus.INACTIVE);
         }
-
-        // @ts-expect-error vapi config
-        vapi.start(configureAssistant(voice, style), assistantOverrides)
     }
 
     const handleDisconnect = () => {
