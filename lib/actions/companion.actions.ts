@@ -18,10 +18,20 @@ export const createCompanion = async (formData: CreateCompanion) => {
     return data[0];
 }
 
-export const getAllCompanions = async ({ limit = 10, page = 1, subject, topic }: GetAllCompanions) => {
+export const getAllCompanions = async ({ limit = 10, page = 1, subject, topic, userId }: GetAllCompanions) => {
     const supabase = createSupaBaseClient();
-
     let query = supabase.from('companions').select();
+
+    if (userId) {
+        query = query.eq('userId', userId);
+    }
+    if (subject) {
+        query = query.eq('subject', subject);
+    }
+    if (topic) {
+        query = query.eq('topic', topic);
+    }
+
 
     if (subject && topic) {
         query = query.ilike('subject', `%${subject}%`)
@@ -110,23 +120,23 @@ export const newCompanionPermissions = async () => {
     const supabase = createSupaBaseClient();
 
     let limit = 0;
-    if(has({plan: 'pro'})) {
+    if (has({ plan: 'pro' })) {
         return true;
-    }else if(has({feature: "3_companion_limit"})) {
+    } else if (has({ feature: "3_companion_limit" })) {
         limit = 3;
-    }else if(has({feature: "10_companion_limit"})) {
+    } else if (has({ feature: "10_companion_limit" })) {
         limit = 10;
     }
 
-    const { data, error } = await supabase.from('companions').select('id', {count: 'exact'}).eq('author', userId);
+    const { data, error } = await supabase.from('companions').select('id', { count: 'exact' }).eq('author', userId);
 
-    if(error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
     const companionCount = data?.length;
 
-    if(companionCount >= limit) {
+    if (companionCount >= limit) {
         return false;
-    }else{
+    } else {
         return true;
     }
 

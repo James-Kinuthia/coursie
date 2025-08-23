@@ -3,10 +3,12 @@ import CompanionsList from '@/components/companions-list';
 import CTA from '@/components/cta';
 import { getAllCompanions, getRecentSessions } from '@/lib/actions/companion.actions';
 import { getSubjectColor } from '@/lib/utils';
+import { auth } from '@clerk/nextjs/server';
 
 export const dynamic = 'force-dynamic';
 
 const Page = async () => {
+  const { userId } = await auth();
   const companions = await getAllCompanions({ limit: 3 });
   const recentSessionCompanions = await getRecentSessions(10);
 
