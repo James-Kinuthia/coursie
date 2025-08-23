@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 
 const NewCompanion = async () => {
   const { userId } = await auth();
-  if (!userId) redirect('/sign-in');
+  if (!userId) redirect('/');
 
   const canCreateCompanion = await newCompanionPermissions();
 

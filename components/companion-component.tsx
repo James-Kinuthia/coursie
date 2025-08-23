@@ -112,7 +112,7 @@ const CompanionComponent = ({ companionId, userName, name, userImage, subject, t
                     </div>
                     <p className='font-bold text-2xl'>{name}</p>
                 </div>
-                <div className="user-section">
+                <div className="user-section ">
                     <div className="user-avatar">
                         <Image src={userImage} alt={userName} width={150} height={150} className='rounded-lg' />
                         <p className="font-bold text-2xl">{userName}</p>
