@@ -13,7 +13,6 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
 
   const companions = await getAllCompanions({ subject, topic });
 
-
   return (
     <main>
       <section className="flex justify-between gap-4 max-sm:flex-col">
@@ -24,11 +23,13 @@ const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
         </div>
       </section>
       <section className="companions-grid">
-        {
-          companions.map((companion) => (
-            <CompanionCard key={companion.id} {... companion} color={getSubjectColor(companion.subject)} />
-          ))
-        }
+        {companions.map((companion) => (
+          <CompanionCard
+            key={companion.id}
+            {...companion}
+            color={getSubjectColor(companion.subject)}
+          />
+        ))}
       </section>
     </main>
   )
